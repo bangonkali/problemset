@@ -1,4 +1,4 @@
-import { asyncOp } from './lib/lib';
+import { asyncOp } from '../lib/lib';
 
 /**
  * Interface for asyncOp so that tests can be implemented using

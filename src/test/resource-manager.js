@@ -1,4 +1,4 @@
-import { ResourceManager } from '../ResourceManager'
+import { ResourceManager } from '../solutions/ResourceManager'
 import * as assert from 'assert';
 
 describe('Expanded cycle test for Resource Manager', function () {

@@ -1,4 +1,4 @@
-import * as problemset from '../Async'
+import * as problemset from '../solutions/Async'
 import * as assert from 'assert';
 
 describe('Cycle test for AsyncOp', function() {

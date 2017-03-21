@@ -5,5 +5,5 @@
 /**
  * Exports
  */
-export { ResourceManager, Resource, ResourceCallback } from './ResourceManager';
-export { doAsync, doAsyncWithInterface } from './Async'
+export { ResourceManager, Resource, ResourceCallback } from './solutions/ResourceManager';
+export { doAsync, doAsyncWithInterface } from './solutions/Async'

@@ -16,8 +16,8 @@
     "test": "built/test"
   },
   "scripts": {
-    "test": "tsc && mocha built/test",
-    "start": "tsc && node ./built/index.js"
+    "test": "rm -rf built && tsc && mocha built/test",
+    "start": "rm -rf built && tsc && node ./built/index.js"
   },
   "keywords": [],
   "author": "",
