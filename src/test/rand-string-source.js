@@ -96,4 +96,47 @@ describe('RandStringSource tests', () => {
             done();
         }, 500);
     });
+
+
+    it('expanded test.', function (done) {
+        let actuals = [];
+        let expected = [
+            // "CHUNK: aaaaa.aaaaaa.aaa",
+            "aaaaa",
+            "aaaaaa",
+            // "CHUNK: ....",
+            "aaa",
+            // "CHUNK: a.a.a.a",
+            "a",
+            "a",
+            "a",
+            // "CHUNK: a.a.a.a",
+            "aa",
+            "a",
+            "a"
+        ];
+
+        /** Tests the RandStringSource using a modified Stream that has definite data. */
+        let source = new RandStringSource(new DefiniteStream([
+            'aaaaa.aaaaaa.aaa',
+            '....',
+            'a.a.a.a',
+            'a.a.a.a',
+        ]));
+
+        /** Pushes the actual responses to an array for checking. */
+        source.on('data', (data) => {
+            // console.log(data);
+            actuals.push(data);
+        });
+
+        /** Terminates the test at the right time. */
+        setTimeout(() => {
+            assert.equal(actuals.length, expected.length);
+            for (let i = 0; i < actuals.length; i++){
+                assert.equal(actuals[i], expected[i]);
+            }
+            done();
+        }, 500);
+    });
 });
