@@ -1,3 +1,14 @@
+# Node Modules
 node_modules/
+bower_components/
+
+# Git
 .git/
+
+# Editors
 .idea/
+.vs/
+
+# Mapping files
+built/*
+*.map
