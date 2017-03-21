@@ -1,4 +1,26 @@
+## Additional Developer Notes
+
+### Usage
+
+* Run `npm test` to run the tests.
+
+### Notes
+
+* Solutions are written in _Typescript_ and are saved in `src/solutions/*.ts`.
+* The tests are written in _ES6_ and are saved in `src/test/*.js`.
+* Solution implementations are exported by `src/index.ts` and are built to `built/index.js`.
+* In order to compile just do a `npm start`. It will try to compile, run tests, and run anything that's stored at `built/index.js`.
+* The build output dir is at `built`.
+* The main index.js can be used after building, which is `built/index.js`.
+* Most of the _async_ functionality are implemented with the use of `Promises`.
+* The use of a _generator_ is implemented in one test case `src/test/rand-string-source.js`.
+* Most of the implementation is done throught the uses of _Typescript classes_.
+* Developer is more familiar with _C#_ but only moderately adept at writing _iterator_/_iterable_ classes.
+
+## Original notes
+
 The use of [**ES6**](https://nodejs.org/en/docs/es6/) features especially _Promises_, _Generators_ and _Classes_ are highly encouraged. Using a transpiler/compiler will be optional but [babeljs](https://babeljs.io/) is recommended.
+
 The candidate should review his answers as this will assess the candidate's development style and adherence to best practices (readability, correctness and testability) in NodeJS.
 
 Before starting the project, the candidate should fork this repository and apply his changes to that forked version accordingly (the link to this forked repository should be submitted). Commit messages should follow [angularjs's commit message format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
