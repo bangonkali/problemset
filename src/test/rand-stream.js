@@ -5,7 +5,7 @@ describe('Sample RandStream test', function () {
     it('should pass if stream is readable', function (done) {
 
         var stream = new RandStream();
-        assert(stream.readable);
+        assert.equal(stream.readable, true);
 
         setTimeout(() => {
             stream = null;
