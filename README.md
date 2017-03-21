@@ -2,7 +2,28 @@
 
 ### Usage
 
+* Upon download, do a `npm install`.
 * Run `npm test` to run the tests.
+
+### Repl tests
+
+```
+  node
+  > .load ./repl/doasync.js
+  # <ctrl+c+c> when done
+```
+
+```
+  node
+  > .load ./repl/randstream.js
+  # <ctrl+c+c> when done
+```
+
+```
+  node
+  > .load ./repl/resourcemanager.js
+  # <ctrl+c+c> when done
+```
 
 ### Notes
 
