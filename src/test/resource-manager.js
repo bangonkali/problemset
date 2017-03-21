@@ -1,5 +1,5 @@
-var ResourceManager = require('../built').ResourceManager,
-    assert = require('assert');
+import { ResourceManager } from '../ResourceManager'
+import * as assert from 'assert';
 
 describe('Expanded cycle test for Resource Manager', function () {
     it('correct sequence of events in default test.', (done2) => {

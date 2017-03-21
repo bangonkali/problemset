@@ -13,11 +13,11 @@
   "description": "The use of [**ES6**](https://nodejs.org/en/docs/es6/) features especially _Promises_, _Generators_ and _Classes_ are highly encouraged. Using a transpiler/compiler will be optional but [babeljs](https://babeljs.io/) is recommended. The candidate should review his answers as this will assess the candidate's development style and adherence to best practices (readability, correctness and testability) in NodeJS.",
   "main": "built/index.js",
   "directories": {
-    "test": "test"
+    "test": "built/test"
   },
   "scripts": {
-    "test": "tsc && echo Build complete. && mocha",
-    "start": "tsc && echo Build complete. && ./node_modules/mocha/bin/mocha && node ./built/index.js"
+    "test": "tsc && mocha built/test",
+    "start": "tsc && node ./built/index.js"
   },
   "keywords": [],
   "author": "",
