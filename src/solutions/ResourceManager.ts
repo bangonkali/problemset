@@ -1,34 +1,39 @@
 export class ResourceManager {
-    public index : number = 0;
-    public max : number = 0;
-    public current : number = 0;
-    public resources : Resource[] = [];
+    private _max : number = 0;
+    private _resources : Resource[] = [];
+    private _callbackQueue : ResourceCallback[] = [];
 
     public constructor(max : number) {
-        this.max = max;
-        this.current = 0;
-    }
-
-    public resolve() : void {
-        this.current--;
-        this.accumulate();
+        this._max = max;
     }
 
     public accumulate() {
-        if (this.resources.length > 0) {
-            if (this.max > this.current)
-            {
-                this.current++;
-                let next = this.resources.shift();
-                next.exec();
+        if (this._callbackQueue.length > 0) {
+            /** find a usable resource. Only returns first res not busy.*/
+            var res = this._resources.find(res => res.Busy == false);
+
+            /** 
+             * create a new resource if none found. This modification makes
+             * only _max number of resources but the _callbackQueue is still 
+             * solved on after another make sure all queued ResourceCallback's 
+             * are going to be resolved.
+             */
+            if (res == null && this._resources.length < this._max) {
+                res = new Resource(this);
+                this._resources.push(res);
+            }
+
+            /** Only unshift next operation if there is indeed an available res. */
+            if (res != null) {
+                let next = this._callbackQueue.shift();
+                res.exec(next);
             }
         }
     }
 
+    /** Borrow's a resource. Only issues resources that are not busy. */
     public borrow(callback: ResourceCallback) : void {
-        let res = new Resource(this, callback);
-        this.resources.push(res);
-        this.index++;
+        this._callbackQueue.push(callback);
         this.accumulate();
     }
 }
@@ -37,26 +42,42 @@ export type ResourceCallback = (res: Resource) => void;
 
 export class Resource {
 
-    private manager : ResourceManager;
-    private promise : Promise<any>;
-    private callback : ResourceCallback;
-    private resolve : any;
+    private _manager : ResourceManager;
+    private _promise : Promise<any>;
+    private _callback : ResourceCallback;
+    private _resolve : any;
+    private _busy : boolean = false;
 
-    public constructor(manager : ResourceManager, callback : ResourceCallback) {
-        this.manager = manager;
-        this.callback = callback;
+    /** Creates the resource and assigns ResourceManager. */
+    public constructor(manager : ResourceManager) {
+        this._manager = manager;
     }
 
-    public exec() : void {
-        this.promise = new Promise((resolve) => {
-            this.resolve = resolve;
-            this.callback(this);
+    /** Sets the callback of the resource. */
+    private set Callback(callback : ResourceCallback){
+        this._callback = callback;
+    }
+
+    /** Gets the busy flag. True if the resource is busy. */
+    public get Busy() : boolean {
+        return this._busy;
+    }
+
+    /** Executes the call back within the resource. */
+    public exec(callback : ResourceCallback) : void {
+        this.Callback = callback;
+        this._busy = true;
+        this._promise = new Promise((resolve) => {
+            this._resolve = resolve;
+            this._callback(this);
         });
-        this.promise.then();
+        this._promise.then();
     }
 
+    /** Informs the ResourceManager that this resource is Done. */
     public release() : void {
-        this.resolve();
-        this.manager.resolve();
+        this._busy = false;
+        this._resolve();
+        this._manager.accumulate();
     }
 }
