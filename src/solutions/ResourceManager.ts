@@ -15,8 +15,8 @@ export class ResourceManager {
             /** 
              * create a new resource if none found. This modification makes
              * only _max number of resources but the _callbackQueue is still 
-             * solved on after another make sure all queued ResourceCallback's 
-             * are going to be resolved.
+             * solved one after another. Making sure all queued 
+             * `ResourceCallback`s are going to be resolved.
              */
             if (res == null && this._resources.length < this._max) {
                 res = new Resource(this);
@@ -53,11 +53,6 @@ export class Resource {
         this._manager = manager;
     }
 
-    /** Sets the callback of the resource. */
-    private set Callback(callback : ResourceCallback){
-        this._callback = callback;
-    }
-
     /** Gets the busy flag. True if the resource is busy. */
     public get Busy() : boolean {
         return this._busy;
@@ -65,7 +60,7 @@ export class Resource {
 
     /** Executes the call back within the resource. */
     public exec(callback : ResourceCallback) : void {
-        this.Callback = callback;
+        this._callback  = callback;
         this._busy = true;
         this._promise = new Promise((resolve) => {
             this._resolve = resolve;
